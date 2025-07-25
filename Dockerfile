@@ -16,12 +16,14 @@ COPY requirements.txt .
 # Install Python dependencies
 RUN pip install --no-cache-dir -r requirements.txt
 
-# Copy the application code
-COPY . .
-
-# Create directory for uploaded files
+# Create directory for uploaded files and set permissions
 RUN mkdir -p public && \
-    chown -R www-data:www-data public
+    chown -R www-data:www-data /app && \
+    chmod -R 755 /app && \
+    chmod 777 public
+
+# Copy the application code (as root)
+COPY --chown=www-data:www-data . .
 
 # Set environment variables
 ENV PYTHONUNBUFFERED=1 \
