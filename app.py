@@ -7,12 +7,16 @@ import cv2
 import numpy as np
 from dotenv import load_dotenv
 from flask import Flask, jsonify, request, send_from_directory
+from flask_cors import CORS
 from license_plate import detect
 
 # Load environment variables from .env file
 load_dotenv()
 
 app = Flask(__name__)
+
+# CORS
+CORS(app)
 
 # Configure app from environment variables with defaults
 app.config['UPLOAD_FOLDER'] = os.getenv('UPLOAD_FOLDER', 'public')
